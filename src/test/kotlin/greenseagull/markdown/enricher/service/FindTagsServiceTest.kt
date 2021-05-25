@@ -12,7 +12,7 @@ import java.nio.file.Paths
 class FindTagsServiceTest {
 
     companion object {
-        private const val RESOURCES = "src/test/resources/markdown_files"
+        private const val RESOURCES = "src/test/resources/markdown"
     }
 
     private val findTagsService = FindTagsService()
