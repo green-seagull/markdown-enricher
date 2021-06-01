@@ -1,16 +1,12 @@
 package greenseagull.markdown.enricher.service
 
 import greenseagull.markdown.enricher.model.Link
+import greenseagull.markdown.enricher.service.MarkdownRegex.LINK_REGEX
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.streams.toList
-import kotlin.text.RegexOption.*
 
 class FindLinksService {
-    companion object {
-        private val LINK_REGEX = """\[\[([a-zAZ0-9_\ ]+)]]""".toRegex(setOf(IGNORE_CASE, COMMENTS, UNIX_LINES))
-    }
-
     fun findFindLinks(path: Path): Set<Link> =
         when {
             Files.isRegularFile(path) -> scanForLinksSingleFile(path)
