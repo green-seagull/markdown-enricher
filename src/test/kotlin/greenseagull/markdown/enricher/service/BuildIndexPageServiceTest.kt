@@ -7,38 +7,34 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 class BuildIndexPageServiceTest {
     companion object {
         private const val MARKDOWN = "src/test/resources/markdown"
-        private const val TMP = "/tmp"
-        private val WRITABLE_MARKDOWN_PATH = Paths.get(TMP, "markdown")
-        private val WRITABLE_MARKDOWN_FILE1 = Paths.get(TMP, "markdown", LINKED_MD)
-        private val READONLY_MARKODWN_FILE1 = Paths.get(MARKDOWN, LINKED_MD)
+        private val READONLY_MARKDOWN_FILE1 = Paths.get(MARKDOWN, LINKED_MD)
 
         private val LINK = Link("[[markdown]]")
     }
 
+    private lateinit var writableMarkdownFile1: Path
+
     @BeforeEach
     fun setup() {
-        if (Files.exists(WRITABLE_MARKDOWN_PATH)) {
-            if (Files.exists(WRITABLE_MARKDOWN_FILE1)) {
-                Files.delete(WRITABLE_MARKDOWN_FILE1)
-            }
-            Files.delete(WRITABLE_MARKDOWN_PATH)
-        }
-        Files.createDirectory(WRITABLE_MARKDOWN_PATH)
-        Files.copy(READONLY_MARKODWN_FILE1, WRITABLE_MARKDOWN_FILE1)
+        val tempDirPath = Files.createTempDirectory(BuildIndexPageServiceTest::class.simpleName)
+        writableMarkdownFile1 = Paths.get(tempDirPath.toFile().absolutePath, LINKED_MD)
+
+        Files.copy(READONLY_MARKDOWN_FILE1, writableMarkdownFile1)
     }
 
     @Test
     fun `should add link to existing markdown and not change other lines in file`() {
-        BuildIndexPageService().addLink(WRITABLE_MARKDOWN_FILE1, LINK)
+        BuildIndexPageService().addLink(writableMarkdownFile1, LINK)
 
-        assertThat(FindLinksService().findFindLinks(WRITABLE_MARKDOWN_FILE1))
+        assertThat(FindLinksService().findFindLinks(writableMarkdownFile1))
             .isEqualTo(EXPECTED_LINK_SET + setOf(LINK))
-        assertThat(Files.lines(READONLY_MARKODWN_FILE1).count())
-            .isEqualTo(Files.lines(WRITABLE_MARKDOWN_FILE1).count())
+        assertThat(Files.lines(READONLY_MARKDOWN_FILE1).count())
+            .isEqualTo(Files.lines(writableMarkdownFile1).count())
     }
 }
