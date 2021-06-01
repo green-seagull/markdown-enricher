@@ -1,5 +1,5 @@
-# Tagged
-tags [[first_tag]] [[secondTag]]
+# Linked
+links [[first_link]] [[secondLink]]
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in porta orci. 
 Nullam faucibus sagittis magna vel pellentesque. Suspendisse efficitur eros et 

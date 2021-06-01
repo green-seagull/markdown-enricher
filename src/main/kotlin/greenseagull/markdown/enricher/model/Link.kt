@@ -1,3 +1,3 @@
 package greenseagull.markdown.enricher.model
 
-data class Tag(val name: String)
+data class Link(val name: String)

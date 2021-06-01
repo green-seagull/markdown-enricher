@@ -1,11 +1,11 @@
 package greenseagull.markdown.enricher.service
 
-import greenseagull.markdown.enricher.model.Tag
+import greenseagull.markdown.enricher.model.Link
 
 object TestDataLibrary {
-    const val TAGGED_MD = "tagged.md"
-    val EXPECTED_TAGGED_TAG_SET = setOf(Tag("[[first_tag]]"), Tag( "[[secondTag]]"))
+    const val LINKED_MD = "linked.md"
+    val EXPECTED_LINK_SET = setOf(Link("[[first_link]]"), Link( "[[secondLink]]"))
 
-    const val TAGGED_WITH_SPACE_MD = "tagged_with_space.md"
-    val EXPECTED_TAGGED_WITH_SPACE_TAG_SET = setOf(Tag("[[testing ]]"), Tag( "[[observability]]"))
+    const val LINKED_WITH_SPACE_MD = "linked_with_space.md"
+    val EXPECTED_LINK_WITH_SPACE_SET = setOf(Link("[[testing ]]"), Link( "[[observability]]"))
 }
