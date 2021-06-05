@@ -1,8 +1,8 @@
 package greenseagull.markdown.enricher.service
 
 import greenseagull.markdown.enricher.model.Link
-import greenseagull.markdown.enricher.service.TestDataLibrary.EXPECTED_LINK_SET
-import greenseagull.markdown.enricher.service.TestDataLibrary.LINKED_MD
+import model.DataModel.EXPECTED_LINK_SET
+import model.DataModel.LINKED_MD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

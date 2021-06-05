@@ -1,19 +1,16 @@
 package greenseagull.markdown.enricher.service
 
-import greenseagull.markdown.enricher.service.TestDataLibrary.EXPECTED_LINK_SET
-import greenseagull.markdown.enricher.service.TestDataLibrary.EXPECTED_LINK_WITH_SPACE_SET
-import greenseagull.markdown.enricher.service.TestDataLibrary.LINKED_MD
-import greenseagull.markdown.enricher.service.TestDataLibrary.LINKED_WITH_SPACE_MD
+import model.DataModel.EXPECTED_LINK_SET
+import model.DataModel.EXPECTED_LINK_WITH_SPACE_SET
+import model.DataModel.LINKED_MD
+import model.DataModel.LINKED_WITH_SPACE_MD
+import model.DataModel.RESOURCES
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.nio.file.Paths
 
 
 class FindLinksServiceTest {
-
-    companion object {
-        private const val RESOURCES = "src/test/resources/markdown"
-    }
 
     private val findLinksService = FindLinksService()
 
