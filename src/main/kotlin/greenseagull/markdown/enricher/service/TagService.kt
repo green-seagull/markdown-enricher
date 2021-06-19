@@ -25,7 +25,7 @@ class TagService {
         if (Files.isRegularFile(path)) {
             val containsTag = Files.lines(path).anyMatch { line -> line.contains(tag.name) }
             if (!containsTag) {
-                val fileStreamWithPrependedTags = Stream.concat(Stream.of("tags: ${tag.name}\n"), Files.lines(path))
+                val fileStreamWithPrependedTags = Stream.concat(Stream.of("tags: ${tag.name}"), Files.lines(path))
 
                 writeStreamToFile(fileStreamWithPrependedTags, path)
             }
@@ -47,7 +47,15 @@ class TagService {
         }
 
         BufferedWriter(FileWriter(TEMP_FILE.toFile())).use { writer ->
-            stream.forEach { line -> writer.write(line) }
+            var skipFirstLine = true
+            stream.forEach { line ->
+                if (skipFirstLine) {
+                    skipFirstLine = false
+                } else {
+                    writer.write("\n")
+                }
+                writer.write(line)
+            }
         }
 
         Files.move(TEMP_FILE, path, StandardCopyOption.REPLACE_EXISTING)
