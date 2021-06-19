@@ -1,9 +1,6 @@
 package greenseagull.markdown.enricher.service
 
-import greenseagull.markdown.enricher.model.Link
 import greenseagull.markdown.enricher.model.Tag
-import model.DataModel.EXPECTED_LINK_SET
-import model.DataModel.LINKED_MD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,6 +10,7 @@ import java.nio.file.Paths
 
 class TagServiceTest {
     companion object {
+        private const val LINKED_MD = "linked.md"
         private const val MARKDOWN = "src/test/resources/markdown"
         private val READONLY_MARKDOWN_FILE1 = Paths.get(MARKDOWN, LINKED_MD)
 
