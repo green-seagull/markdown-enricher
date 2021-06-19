@@ -3,7 +3,10 @@ package greenseagull.markdown.enricher.service
 import greenseagull.markdown.enricher.model.Tag
 import java.io.BufferedWriter
 import java.io.FileWriter
-import java.nio.file.*
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import java.util.stream.Stream
 
 class TagService {
@@ -12,6 +15,13 @@ class TagService {
     }
 
     fun addMissingTag(path: Path, tag: Tag) {
+        when {
+            Files.isRegularFile(path) -> addMissingTagToFile(path, tag)
+            Files.isDirectory(path) -> tagAllFilesInDirectory(path, tag)
+        }
+    }
+
+    private fun addMissingTagToFile(path: Path, tag: Tag) {
         if (Files.isRegularFile(path)) {
             val containsTag = Files.lines(path).anyMatch { line -> line.contains(tag.name) }
             if (!containsTag) {
@@ -19,6 +29,15 @@ class TagService {
 
                 writeStreamToFile(fileStreamWithPrependedTags, path)
             }
+        }
+    }
+
+    private fun tagAllFilesInDirectory(path: Path, tag: Tag) {
+        val markDownFiles = Files.walk(path)
+            .filter { Files.isRegularFile(it) }
+            .filter { it.toFile().name.endsWith(".md") }
+        markDownFiles.forEach {
+            addMissingTag(it, tag)
         }
     }
 
